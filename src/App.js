@@ -26,13 +26,20 @@ const particlesOptions = {
 function App() {
   const [ input, setInput ] = useState('')
   const [ imageUrl, setImageUrl] = useState('')
-  // const [ box, setBox ] = useState({})
+  const [ box, setBox ] = useState({})
 
 
   const app = new Clarifai.App({
     apiKey: "6862fc53ace64fe79028edaec5a14eb8",
   })
 
+  const calculateFacelocation = (data) => {
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
+    const image = document.getElementById('inputImage')
+    const width = Number(image.width)
+    const height = Number(image.height)
+    console.log(width, height)
+  }
 
   const onInputChange = (e) => {
     setInput(e.target.value)
@@ -46,7 +53,7 @@ function App() {
       input
     )
     .then((response) => {
-      console.log(response.outputs[0].data.regions[0].region_info.bounding_box)
+      calculateFacelocation(response)
     })
     .catch(err => {
       console.log(err)
