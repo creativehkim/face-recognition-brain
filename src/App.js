@@ -28,6 +28,7 @@ function App() {
   const [ input, setInput ] = useState('')
   const [ imageUrl, setImageUrl] = useState('')
   const [ box, setBox ] = useState({})
+  const [ route, setRoute ] = useState('signin')
 
 
   const app = new Clarifai.App({
@@ -73,14 +74,20 @@ function App() {
 
   return (
     <div className="App">
-      <Signin />
+      
       <Particles className='particles'
                 params={particlesOptions} />
       <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm onInputChange={onInputChange} onButtonSubmit={onButtonSubmit}/>
-      <FaceRecognition imageUrl={imageUrl} box={box}/>
+      { route === 'signin' 
+        ? <Signin />
+        : <div>
+            <Logo />
+            <Rank />
+            <ImageLinkForm onInputChange={onInputChange} onButtonSubmit={onButtonSubmit}/>
+            <FaceRecognition imageUrl={imageUrl} box={box}/>
+          </div>
+      }
+      
     </div>
   );
 }
