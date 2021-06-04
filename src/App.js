@@ -8,6 +8,7 @@ import Clarifai from 'clarifai'
 import 'tachyons'
 import './App.css'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
+import Signin from './components/Signin/Signin'
 
 
 
@@ -72,6 +73,7 @@ function App() {
 
   return (
     <div className="App">
+      <Signin />
       <Particles className='particles'
                 params={particlesOptions} />
       <Navigation />
