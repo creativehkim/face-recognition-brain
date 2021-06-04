@@ -30,6 +30,7 @@ function App() {
   const [ imageUrl, setImageUrl] = useState('')
   const [ box, setBox ] = useState({})
   const [ route, setRoute ] = useState('signin')
+  const [ isSignedIn, setIsSignedIn ] = useState(false)
 
 
   const app = new Clarifai.App({
@@ -50,7 +51,6 @@ function App() {
   }
 
   const displayFaceBox = (box) => {
-    console.log(box)
     setBox(box)
   }
 
@@ -74,6 +74,11 @@ function App() {
   }
 
   const onRouteChange = (route) => {
+    if (isSignedIn) {
+      setIsSignedIn(false)
+    } else if (route === 'home') {
+      setIsSignedIn(true)
+    }
     setRoute(route)
   }
 
@@ -82,7 +87,7 @@ function App() {
       
       <Particles className='particles'
                 params={particlesOptions} />
-      <Navigation onRouteChange={onRouteChange}/>
+      <Navigation onRouteChange={onRouteChange} isSignedIn={isSignedIn}/>
       { route === 'home' 
         ? <div>
             <Logo />
