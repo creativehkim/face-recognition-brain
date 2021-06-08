@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
 import Navigation from './components/Navigation/Navigation'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
@@ -31,7 +31,15 @@ function App() {
   const [ box, setBox ] = useState({})
   const [ route, setRoute ] = useState('signin')
   const [ isSignedIn, setIsSignedIn ] = useState(false)
+  const [ users, setUsers] = useState([])
 
+  useEffect(() => {
+    fetch('http://localhost:3000')
+      .then(res => setUsers(res.data))
+      .then(console.log)
+}, [])
+
+console.log(users)
 
   const app = new Clarifai.App({
     apiKey: "6862fc53ace64fe79028edaec5a14eb8",
