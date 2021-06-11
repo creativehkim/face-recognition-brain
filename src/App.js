@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Navigation from './components/Navigation/Navigation'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
@@ -28,7 +28,7 @@ const particlesOptions = {
   }
 }
 
-class App extends React.Component {
+class App extends React.Component { 
   constructor() {
     super()
     this.state = {
