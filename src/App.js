@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Navigation from './components/Navigation/Navigation'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
@@ -28,7 +28,7 @@ const particlesOptions = {
   }
 }
 
-class App extends React.Component { 
+class App extends Component { 
   constructor() {
     super()
     this.state = {
@@ -82,29 +82,31 @@ class App extends React.Component {
   onPictureSubmit = () => {
     this.setState({imageUrl: this.state.input})
 
-    app.models.predict(
-      Clarifai.FACE_DETECT_MODEL,
-      this.state.input
-    )
-    .then(response => {
-      if(response) {
-        fetch('http://localhost:3000/image', {
-          method: 'put',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
+    app.models
+      .predict(
+        Clarifai.FACE_DETECT_MODEL,
+        this.state.input
+      )
+      .then(response => {
+        console.log('hi', response)
+        if(response) {
+          fetch('http://localhost:3000/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
             id: this.state.user.id
+            })
           })
-        })
-        .then(response => response.json())
-        .then(count => {
-          this.setState(Object.assign(this.state.user, { entries: count }))
-        })
-  }
-  this.displayFaceBox(this.calculateFacelocation(response))
-})  
-  .catch(err => {
-      console.log(err)
-    })
+          .then(response => response.json())
+          .then(count => {
+            this.setState(Object.assign(this.state.user, { entries: count }))
+          })
+        }
+      this.displayFaceBox(this.calculateFacelocation(response))
+      })  
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   onRouteChange = (route) => {
@@ -126,13 +128,20 @@ class App extends React.Component {
       { route === 'home' 
         ? <div>
             <Logo />
-            <Rank name={this.state.user.name} entries={this.state.user.entries}/>
-            <ImageLinkForm onInputChange={this.onInputChange} onPictureSubmit={this.onPictureSubmit}/>
+            <Rank 
+              name={this.state.user.name} 
+              entries={this.state.user.entries}
+            />
+            <ImageLinkForm 
+              onInputChange={this.onInputChange} 
+              onPictureSubmit={this.onPictureSubmit}
+            />
             <FaceRecognition imageUrl={imageUrl} box={box}/>
           </div>
-        : ( route === 'signin' 
-        ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
-        : <Register onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
+        : ( 
+          route === 'signin' 
+          ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+          : <Register onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
         )
       }
       
