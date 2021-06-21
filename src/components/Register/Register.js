@@ -80,7 +80,7 @@ class Register extends React.Component {
             </fieldset>
             <div className="">
               <input 
-                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
+                className="f5 b grow no-underline br-pill ba ph4 pv3 dib mr4 near-black pointer center" style={{background: 'transparent' }}
                 type="submit" 
                 value="Register" 
                 onClick={this.onSubmitSignIn}

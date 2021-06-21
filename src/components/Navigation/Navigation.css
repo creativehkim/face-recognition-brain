@@ -1,0 +1,12 @@
+.br-pill {
+  border: solid #4378ad;
+}
+
+.br-pill:hover {
+  background-color: rgba(144, 210, 236, 0.5)
+
+}
+
+.br-pill:active {
+  background-color: rgba(177, 215, 230, 0.5)
+}

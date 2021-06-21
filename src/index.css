@@ -3,9 +3,7 @@
 body {
   margin: 0;
   padding:0;
-  background-image: linear-gradient(to left, #d299c2 0%, #fef9d7 100%);
   font-family: 'Poppins', sans-serif;
-
 }
 
 button {

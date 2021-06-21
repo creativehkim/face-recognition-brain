@@ -91,37 +91,41 @@ class App extends Component {
 
 
   onPictureSubmit = () => {
-    this.setState({imageUrl: this.state.input})
-      fetch('https://boiling-anchorage-86212.herokuapp.com/imageurl', {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-        input: this.state.input
+    if(!this.state.input) {
+      alert('Please fill in the image input')
+    } else {
+      this.setState({imageUrl: this.state.input})
+        fetch('https://boiling-anchorage-86212.herokuapp.com/imageurl', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+          input: this.state.input
+          })
         })
-      })
-      .then(response => response.json())
-      .then(response => {
-        console.log('hi', response)
-        if(response) {
-          fetch('https://boiling-anchorage-86212.herokuapp.com/image', {
-            method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-            id: this.state.user.id
+        .then(response => response.json())
+        .then(response => {
+          console.log('hi', response)
+          if(response) {
+            fetch('https://boiling-anchorage-86212.herokuapp.com/image', {
+              method: 'put',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({
+              id: this.state.user.id
+              })
             })
-          })
-          .then(response => response.json())
-          .then(count => {
-            this.setState(Object.assign(this.state.user, { entries: count }))
-          })
-          // Error handling
-          .catch(console.log)
-        }
-      this.displayFaceBox(this.calculateFaceLocation(response))
-      })  
-      .catch(err => {
-        console.log(err)
-      })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count }))
+            })
+            // Error handling
+            .catch(console.log)
+          }
+        this.displayFaceBox(this.calculateFaceLocation(response))
+        })  
+        .catch(err => {
+          console.log(err)
+        })
+    }  
   }
 
   onRouteChange = (route) => {
@@ -132,7 +136,6 @@ class App extends Component {
     }
     this.setState({route: route})
   }
-
   render() {
     const { isSignedIn, imageUrl, route, box } = this.state
     return(
@@ -142,7 +145,6 @@ class App extends Component {
       <Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn}/>
       { route === 'home' 
         ? <div>
-            <Logo />
             <Rank 
               name={this.state.user.name} 
               entries={this.state.user.entries}
